@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 1
+  name: MyString
+  body: MyText
+  approved_at: 2012-09-24 09:21:39
+  expires_on: 2012-09-24
+
+two:
+  id: 1
+  name: MyString
+  body: MyText
+  approved_at: 2012-09-24 09:21:39
+  expires_on: 2012-09-24
