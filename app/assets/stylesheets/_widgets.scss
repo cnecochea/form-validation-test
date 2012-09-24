@@ -1,0 +1,99 @@
+// Place all the styles related to the widgets controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "modules/base";
+
+body {
+  text-align: center;
+}
+
+label {
+  cursor: pointer;
+  cursor: hand;
+
+  &.message {
+    color: $error_color;
+  }
+}
+
+.field-wrap {
+  padding: 1em 1em;
+
+  label:first-child {
+    display: block;
+  }
+}
+
+.field_with_errors {
+  position: relative;
+
+  .message {
+    @include squish-text;
+    @include replace-text-with-dimensions("error.png", $inline: true);
+    position: absolute;
+    top: $field_padding;
+    right: $field_padding;
+  }
+}
+
+.validation-rollup {
+  background-color: $error_color;
+  color: #fff;
+}
+
+
+.example-form {
+  background-color: #ccc;
+  max-width: (600/16) + em;
+  margin: 0 auto;
+  border: 1px solid #666;
+  @include box-shadow(#666 0 0 25px);
+  text-align: left;
+}
+
+%input_box {
+  padding: $field_padding;
+}
+%input_style {
+  @extend %input_box;
+  width: 100%;
+}
+
+%field_has_errors {
+  .field_with_errors & {
+    @include box-shadow(rgba($error_color, .75) 0 0 12px);
+
+    &:focus {
+      @include box-shadow(none);
+    }
+  }
+
+}
+
+
+input {
+  &[type="text"],
+  &[type="search"],
+  &[type="email"],
+  &[type="tel"],
+  &[type="number"],
+  &[type="url"],
+  &[type="password"] {
+    @extend %input_style;
+
+
+    @extend %field_has_errors;
+  }
+}
+
+textarea {
+  @extend %input_style;
+  @extend %field_has_errors;
+}
+
+input[type="submit"],
+input[type="button"],
+button,
+.button {
+  @extend %input_box;
+}

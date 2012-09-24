@@ -1,0 +1,17 @@
+!!! 5
+-# paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+/[if lt IE 7] <html lang="en" class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7">
+/[if IE 7 ]   <html lang="en" class="no-js lt-ie10 lt-ie9 lt-ie8">
+/[if IE 8 ]   <html lang="en" class="no-js lt-ie10 lt-ie9">
+/[if IE 9 ]   <html lang="en" class="no-js lt-ie10">
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+%head
+  %title FormValidationTest
+  = javascript_include_tag 'modernizr.custom.76177'
+  = stylesheet_link_tag "application", media: "all"
+  = csrf_meta_tags
+%body
+  = yield
+  = javascript_include_tag "application"
+
+</html>
