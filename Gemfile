@@ -22,6 +22,8 @@ end
 
 gem 'jquery-rails'
 gem 'client_side_validations'#, path: '/Users/tmayfield/Code/client_side_validations'
+gem 'jquery-ui-rails'
+
 gem 'haml'
 
 # To use ActiveModel has_secure_password

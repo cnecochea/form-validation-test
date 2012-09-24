@@ -1,11 +1,13 @@
 = form_for @widget || Widget.new, validate: true do |f|
   = f.label :name
-  = f.text_field :name    
+  %input.autocomplete#name-autocomplete{ 'data-validated-by' => 'widget_name' }
+  = f.hidden_field :name, 'data-validate' => true
+
   = f.label :body
   = f.text_area :body
 
   = f.label :expires_on
-  = f.date_select :expires_on, {include_blank: true}, :class => 'validated-datefield'
+  = f.validated_date_select :expires_on, {include_blank: true}, {}
   = f.hidden_field :expires_on, 'data-validate' => true
 
   = f.submit

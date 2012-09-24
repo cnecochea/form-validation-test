@@ -1,20 +1,3 @@
-$ ->
-  $(document).on 'change', '.validated-datefield', (e) ->
-    dateFieldId = e.target.id.replace(/_\di$/, "")
-    year = [1,2,3].map (i, n) ->
-      parseInt($("##{dateFieldId}_#{i}i").val()) || 0
-
-    hiddenDate = ""
-    yearTotal = 1
-    yearTotal *= y for y in year
-    if yearTotal > 0
-      hiddenDate = year.join('-')
-
-    elem = $("input##{dateFieldId}")
-    elem.val(hiddenDate)
-    elem.data('changed', true)
-    elem.trigger('focusout')
-
 currentErrors = {}
 
 printErrors = (form) ->
@@ -24,12 +7,12 @@ printErrors = (form) ->
     err.append("<li>#{field} #{data.message} <a href=\"##{data.anchor}\" onclick=\"$('\##{data.anchor}').focus()\">Fix me!</a></li>")
   form.prepend(err)
 
-clientSideValidations.callbacks.element.pass = (element, callback, eventData) ->
+clientSideValidations.callbacks.element.pass = (element, removeError, eventData) ->
   id = element.attr('id')
   labelText = $("label:not([class='message'])[for='#{id}']").text()
   delete currentErrors[labelText || name]
   printErrors element.closest('form')
-  callback()
+  removeError()
 
 clientSideValidations.callbacks.element.fail = (element, message, addError, eventData) ->
   addError()
@@ -42,3 +25,34 @@ clientSideValidations.callbacks.element.fail = (element, message, addError, even
 clientSideValidations.callbacks.form.fail = (form, eventData) ->
   printErrors(form)
 
+writeValueToHiddenField = (el, val) ->
+  targetId = $(el).data 'validated-by'
+  target = $("##{targetId}")
+  target.val val
+  target.data 'changed', true
+  target.trigger 'focusout'
+
+buildDateString = (dateFieldId) ->
+  year = [1,2,3].map (i, n) ->
+    parseInt($("##{dateFieldId}_#{i}i").val()) || 0
+  hiddenDate = ""
+  yearTotal = 1
+  yearTotal *= y for y in year
+  if yearTotal > 0
+    hiddenDate = year.join('-')
+  hiddenDate
+
+validateHiddenField = (e) ->
+  target = $(e.target)
+  if target.data('pre-validation-callback')
+    val = eval target.data('pre-validation-callback')
+  else
+    val = e.target.value
+  writeValueToHiddenField e.target, val
+
+$ ->
+  $(document).on 'blur', 'form[data-validate=true] input[data-validated-by]', (e) ->
+    validateHiddenField(e)
+
+  $(document).on 'change', 'form[data-validate=true] select[data-validated-by]', (e) ->
+    validateHiddenField(e)
