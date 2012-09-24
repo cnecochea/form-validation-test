@@ -1,3 +1,20 @@
+$ ->
+  $(document).on 'change', '.validated-datefield', (e) ->
+    dateFieldId = e.target.id.replace(/_\di$/, "")
+    year = [1,2,3].map (i, n) ->
+      parseInt($("##{dateFieldId}_#{i}i").val()) || 0
+
+    hiddenDate = ""
+    yearTotal = 1
+    yearTotal *= y for y in year
+    if yearTotal > 0
+      hiddenDate = year.join('-')
+
+    elem = $("input##{dateFieldId}")
+    elem.val(hiddenDate)
+    elem.data('changed', true)
+    elem.trigger('focusout')
+
 currentErrors = {}
 
 printErrors = (form) ->
