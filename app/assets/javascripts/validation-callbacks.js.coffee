@@ -1,7 +1,7 @@
 currentErrors = {}
 
 printErrors = (form) ->
-  err = if $('ul.errors').length then $('ul.errors') else $('<ul class="errors validation-rollup" role="alert"></ul>')
+  err = if $('ol.errors').length then $('ol.errors') else $('<ol class="errors validation-rollup" role="alert"></ol>')
   err.html('')
   for field, data of currentErrors
     err.append("<li>#{field} #{data.message} <a href=\"##{data.anchor}\" onclick=\"$('\##{data.anchor}').focus(); return false\">Fix me!</a></li>")

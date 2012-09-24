@@ -4,6 +4,7 @@
 @import "modules/base";
 
 body {
+  margin: 1em;
   text-align: center;
 }
 
@@ -39,6 +40,18 @@ label {
 .validation-rollup {
   background-color: $error_color;
   color: #fff;
+  text-align: center;
+  position: fixed;
+  margin: 0;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+
+  > li {
+    margin: 0 auto;
+    text-align: left;
+  }
 }
 
 
@@ -57,10 +70,18 @@ label {
 %input_style {
   @extend %input_box;
   width: 100%;
+
+  /*.no-boxshadow & {*/
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+  /*}*/
+
 }
 
 %field_has_errors {
   .field_with_errors & {
+    /*border-color: $error_color;*/
     @include box-shadow(rgba($error_color, .75) 0 0 12px);
 
     &:focus {
