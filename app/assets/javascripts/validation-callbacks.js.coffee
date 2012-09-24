@@ -1,13 +1,15 @@
 currentErrors = {}
 clientSideValidations.callbacks.element.fail = (element, message, addError, eventData) ->
   addError()
-  name = element.attr('name')
-  labelText = $("label:not([class='message'])[for='#{element.attr('id')}']").text()
-  currentErrors[labelText || name] = message
+  id = element.attr('id')
+  labelText = $("label:not([class='message'])[for='#{id}']").text()
+  anchor = "#{id}_error"
+  element.before($("<a name=\"#{anchor}\"></a>"))
+  currentErrors[labelText || name] = {message: message, anchor: anchor}
   
 clientSideValidations.callbacks.form.fail = (form, eventData) ->
   err = if $('ul.errors').length then $('ul.error') else $('<ul class="errors"></ul>')
   err.html('')
-  for field, message of currentErrors
-    err.append("<li>#{field}  #{message}</li>")
+  for field, data of currentErrors
+    err.append("<li>#{field} #{data.message} <a href=\"##{data.anchor}\">Fix me!</a></li>")
   form.prepend(err)
