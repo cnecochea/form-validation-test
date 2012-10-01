@@ -6,29 +6,58 @@
 body {
   margin: 1em;
   text-align: center;
+  /*@include background(radial-gradient(black 15%, transparent 16%) 0 0, radial-gradient(black 15%, transparent 16%) 8px 8px, radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px, radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px);*/
+  /*background-color: #282828;*/
+  /*background-size: 16px 16px;*/
+  /*background-image: inline-image("stripe.gif");*/
+  /*background-image: url("http://wallpaperpassion.com/upload/1953/apple--wallpaper.jpg");*/
+}
+
+a {
+  @include text-shadow(2px 2px 5px #333);
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 label {
   cursor: pointer;
   cursor: hand;
+}
 
-  &.message {
-    color: $error_color;
-  }
+.inline-error-message {
+  color: $error_color;
 }
 
 .field-wrap {
   padding: 1em 1em;
 
-  label:first-child {
+  .principal-label {
     display: block;
+    margin-bottom: .3em;
+  }
+
+  legend {
+    @extend .principal-label;
+    padding-top: 1em;
+  }
+}
+
+.composite-field {
+  border: 0;
+  padding-top: 0;
+
+  .field_with_errors {
+    @extend %error_wrapper;
+    @extend %input_style;
   }
 }
 
 .field_with_errors {
   position: relative;
 
-  .message {
+  .inline-error-message {
     @include squish-text;
     @include replace-text-with-dimensions("error.png", $inline: true);
     position: absolute;
@@ -40,7 +69,9 @@ label {
 .validation-rollup {
   background-color: $error_color;
   color: #fff;
+  @include box-shadow(0 5px 20px #333);
   text-align: center;
+  padding: 1em;
   position: fixed;
   margin: 0;
   top: 0;
@@ -50,39 +81,50 @@ label {
 
   > li {
     margin: 0 auto;
+    max-width: $form_width;
     text-align: left;
+  }
+
+  a {
+    color: lightyellow;
   }
 }
 
-
 .example-form {
-  background-color: #ccc;
-  max-width: (600/16) + em;
-  margin: 0 auto;
+  background-color: rgba(#ccc, .2);
+  max-width: $form_width;
+  margin: 3em auto;
   border: 1px solid #666;
-  @include box-shadow(#666 0 0 25px);
+  @include box-shadow(#666 0 0 25px, rgba(#333, .25) 0 0 30px inset);
   text-align: left;
 }
 
 %input_box {
-  padding: $field_padding;
+  padding: $field_padding 26px $field_padding $field_padding;
 }
+
 %input_style {
   @extend %input_box;
   width: 100%;
+  border-width: 1px;
+  border-style: inset;
+  border-color: #ccc;
 
-  /*.no-boxshadow & {*/
-    border-width: 1px;
-    border-style: solid;
-    border-color: transparent;
-  /*}*/
+  &:focus {
+    @include transition-property("box-shadow, border");
+    @include transition-duration("1s, 1s");
+    @include transition-timing-function("linear, linear");
+  }
+}
 
+%error_wrapper {
+  border-color: $error_color;
+  @include box-shadow($error_color 0 0 13px);
 }
 
 %field_has_errors {
   .field_with_errors & {
-    /*border-color: $error_color;*/
-    @include box-shadow(rgba($error_color, .75) 0 0 12px);
+    @extend %error_wrapper;
 
     &:focus {
       @include box-shadow(none);
@@ -101,8 +143,6 @@ input {
   &[type="url"],
   &[type="password"] {
     @extend %input_style;
-
-
     @extend %field_has_errors;
   }
 }
@@ -110,6 +150,7 @@ input {
 textarea {
   @extend %input_style;
   @extend %field_has_errors;
+  height: 8em;
 }
 
 input[type="submit"],
@@ -117,4 +158,5 @@ input[type="button"],
 button,
 .button {
   @extend %input_box;
+  padding-right: $field_padding;
 }

@@ -1,7 +1,7 @@
 @import "compass";
 @import "modules/variables";
 
-*, *:after, *:before {
+* {
   @include box-sizing(border-box);
 }
 
