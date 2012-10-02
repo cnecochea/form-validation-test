@@ -11,16 +11,21 @@
     = f.validated_date_select :expires_on, {include_blank: true}, {}
     = f.hidden_field :expires_on, 'data-validate' => true
 
-
+  .field-wrap
     = f.label :required_field
     = f.text_field :required_field
 
-    = f.label :station
+  %fieldset.field-wrap.composite-field.radio-fields
+    %legend Preferred station
     - %w(oldies new_wave grunge).each do |station|
       = f.radio_button :station, station
       = f.label "station_#{station}", station.humanize.titleize
 
-    = f.label :feasibility
+  .field-wrap.composite-field.radio-fields
     = f.check_box :feasibility
+    = f.label :feasibility
 
   .field-wrap.field-buttons= f.submit
+
+
+
