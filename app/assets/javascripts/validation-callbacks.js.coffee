@@ -3,11 +3,21 @@ currentErrors = {}
 printErrors = (form) ->
   err = if $('ol.errors').length then $('ol.errors') else $('<ol class="errors validation-rollup"></ol>')
   err.html('')
+  idref = err.identify()
   for field, data of currentErrors
     err.append("<li>#{field} #{data.message} <a href=\"##{data.anchor}\" onclick=\"$('\##{data.anchor}').focus(); return false\">Fix me!</a></li>").attr
       tabindex: '0'
       role: 'alert'
-  form.prepend(err)
+      'aria-describedby': "title_#{idref}"
+  form.append(err)
+  $('.validation-rollup-title').remove()
+  $('<p>Sorry, but we need a little more information to proceed.</p>')
+    .addClass('validation-rollup-title')
+    .insertBefore(err)
+    .attr
+      id: "title_#{idref}"
+      role: 'heading'
+      'aria-level': 2
 
 clientSideValidations.callbacks.element.pass = (element, removeError, eventData) ->
   id = element.attr('id')
@@ -52,10 +62,32 @@ validateHiddenField = (e) ->
     val = e.target.value
   writeValueToHiddenField e.target, val
 
+cleanUpRadioButtonErrors = ->
+
+  radios = $('.field_with_errors').find('input[type="radio"]').closest('.field_with_errors')
+  #radios.addClass('error-validation-patch')
+  radios.addClass('error-validation-patch').find('label.message')
+    .attr('aria-hidden', true)
+    .hide()
+  err = $('<div/>').addClass('inline-error-message').text('EEEK!')
+
+  if $('.radio-fields .field_with_errors').length > 0
+    $('input[type="radio"]').closest('.radio-fields').append(err).wrapInner('<div class="field_with_errors" />')
+    $('.radio-fields legend').prependTo('.radio-fields') if $('.radio-fields legend')
+
+anonymous_element_index = 0
+$.fn.identify = ->
+  el = @.first()
+  anonymous_element_index += 1 while $("#anonymous_element_#{anonymous_element_index}").length
+  el.attr('id', "anonymous_element_#{anonymous_element_index}") if !el.attr('id')
+  el.attr('id')
+
 $ ->
   $(document).on 'blur', 'form[data-validate=true] input[data-validated-by]', (e) ->
     validateHiddenField(e)
 
   $(document).on 'change', 'form[data-validate=true] select[data-validated-by]', (e) ->
     validateHiddenField(e)
+
+  cleanUpRadioButtonErrors()
 

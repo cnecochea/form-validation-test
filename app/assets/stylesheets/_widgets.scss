@@ -44,40 +44,29 @@ label {
   }
 }
 
-.composite-field {
-  border: 0;
-  padding-top: 0;
-
-  .field_with_errors {
-    @extend %error_wrapper;
-    @extend %input_style;
-  }
-}
-
-.field_with_errors {
+div.field_with_errors {
   position: relative;
 
   .inline-error-message {
     @include squish-text;
     @include replace-text-with-dimensions("error.png", $inline: true);
+    margin-top: -8px;
     position: absolute;
-    top: $field_padding;
-    right: $field_padding;
+    top: 50%;
+    left: $field_padding;
   }
 }
 
-.validation-rollup {
+%error_presentation {
   background-color: $error_color;
   color: #fff;
-  @include box-shadow(0 5px 20px #333);
   text-align: center;
-  padding: 1em;
-  position: fixed;
+  padding: 1em 2em;
+}
+
+.validation-rollup {
+  @extend %error_presentation;
   margin: 0;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  width: 100%;
 
   > li {
     margin: 0 auto;
@@ -90,17 +79,27 @@ label {
   }
 }
 
+.validation-rollup-title {
+  @extend %error_presentation;
+  @include box-shadow(0 5px 20px #333);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+}
+
 .example-form {
   background-color: rgba(#ccc, .2);
   max-width: $form_width;
-  margin: 3em auto;
+  margin: 5em auto;
   border: 1px solid #666;
   @include box-shadow(#666 0 0 25px, rgba(#333, .25) 0 0 30px inset);
   text-align: left;
 }
 
 %input_box {
-  padding: $field_padding 26px $field_padding $field_padding;
+  padding: $field_padding $field_padding $field_padding $field_padding;
 }
 
 %input_style {
@@ -122,9 +121,15 @@ label {
   @include box-shadow($error_color 0 0 13px);
 }
 
+%error_wrapper_reset {
+  border-width: 0;
+  @include box-shadow(none);
+}
+
 %field_has_errors {
   .field_with_errors & {
     @extend %error_wrapper;
+    padding-left: 26px;
 
     &:focus {
       @include box-shadow(none);
@@ -133,6 +138,45 @@ label {
 
 }
 
+.composite-field {
+  border: 0;
+  padding-top: 0;
+
+  .field_with_errors {
+    @extend %error_wrapper;
+    @extend %input_style;
+    padding-left: 26px;
+  }
+}
+
+.radio-fields {
+  label {
+    margin-right: 1em;
+  }
+
+  .error-validation-patch {
+    @extend %error_wrapper_reset;
+    display: inline;
+
+    &:first-of-type {
+      .inline-error-message {
+        display: block;
+      }
+    }
+
+    & + label {
+      margin-right: 0;
+    }
+
+    .inline-error-message {
+      display: none;
+    }
+  }
+
+  span.field_with_errors {
+    padding-left: 0;
+  }
+}
 
 input {
   &[type="text"],
@@ -159,4 +203,25 @@ button,
 .button {
   @extend %input_box;
   padding-right: $field_padding;
+}
+
+.ui-autocomplete {
+  background-color: rgba(#fff, .75);
+  @include no-bullets;
+  text-align: left;
+  border: 1px solid #666;
+  padding: 0;
+  max-width: $form_width;
+}
+
+.ui-menu-item {
+  > a {
+    display: block;
+    padding: .3em;
+    cursor: pointer; cursor: hand;
+  }
+}
+
+.ui-state-hover {
+  background-color: lighten(lightblue, 5%);
 }

@@ -4,4 +4,4 @@
 
 $ ->
   $('input#name-autocomplete').autocomplete
-    source: ["Michael", "Thomas", "Cris", "Doug", "Brian"],
+    source: ["Alligator", "Aardvark", "Anteater", "Algernon", "Alabama", "Michael", "Thomas", "Cris", "Doug", "Brian"],
