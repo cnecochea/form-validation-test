@@ -26,6 +26,11 @@ label {
   cursor: hand;
 }
 
+.required-indicator {
+  color: $error_color;
+  font-weight: bold;
+}
+
 .inline-error-message {
   color: $error_color;
 }
@@ -86,6 +91,7 @@ div.field_with_errors {
   top: 0;
   left: 0;
   z-index: 10;
+  margin: 0;
   width: 100%;
 }
 
@@ -94,8 +100,11 @@ div.field_with_errors {
   max-width: $form_width;
   margin: 5em auto;
   border: 1px solid #666;
+  @include border-radius(3px);
   @include box-shadow(#666 0 0 25px, rgba(#333, .25) 0 0 30px inset);
   text-align: left;
+  position: relative;
+  z-index: 1;
 }
 
 %input_box {

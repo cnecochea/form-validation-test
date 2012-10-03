@@ -63,17 +63,27 @@ validateHiddenField = (e) ->
   writeValueToHiddenField e.target, val
 
 cleanUpRadioButtonErrors = ->
-
-  radios = $('.field_with_errors').find('input[type="radio"]').closest('.field_with_errors')
-  #radios.addClass('error-validation-patch')
+  radios = $('.field_with_errors').find('input[type="radio"], input[type="checkbox"]').closest('.field_with_errors')
   radios.addClass('error-validation-patch').find('label.message')
     .attr('aria-hidden', true)
     .hide()
   err = $('<div/>').addClass('inline-error-message').text('EEEK!')
 
   if $('.radio-fields .field_with_errors').length > 0
-    $('input[type="radio"]').closest('.radio-fields').append(err).wrapInner('<div class="field_with_errors" />')
-    $('.radio-fields legend').prependTo('.radio-fields') if $('.radio-fields legend')
+    $('input[type="radio"], input[type="checkbox"]').closest('.radio-fields').append(err).wrapInner('<div class="field_with_errors" />')
+    $('.radio-fields legend').prependTo('.radio-fields') if $('.radio-fields legend').length > 0
+
+addRequiredIndicators = ->
+  $('form[data-validate="true"]').find('[data-validate="true"]').not('input[type="checkbox"], input[type="radio"]').each (index, field) ->
+    reqdindicator = $('<abbr />').text('*').attr('title', 'Required ').addClass('required-indicator')
+    $(@).closest('.field-wrap').find('label[for=' + $(@).identify() + ']').prepend(reqdindicator)
+    $(@).prop('required', true).attr('aria-required', 'true')
+
+  $('form[data-validate="true"]').find('[data-validate="true"][type="checkbox"], [data-validate="true"][type="radio"]').each (index, field) ->
+    reqdindicator = $('<abbr />').text('*').attr('title', 'Required ').addClass('required-indicator')
+    $(@).closest('.field-wrap').find('legend').remove('.required-indicator').prepend(reqdindicator)
+    $(@).prop('required', true).attr('aria-required', 'true')
+
 
 anonymous_element_index = 0
 $.fn.identify = ->
@@ -90,4 +100,6 @@ $ ->
     validateHiddenField(e)
 
   cleanUpRadioButtonErrors()
+
+  addRequiredIndicators()
 
