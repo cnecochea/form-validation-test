@@ -79,7 +79,7 @@ addStar = (element) ->
  
 addRequiredIndicators = ->
   $('form[data-validate="true"]').find('[data-validate="true"]').each (index, field) ->
-    legend = $(@).parent().find('legend')
+    legend = $(@).closest('fieldset').find('legend')
     if legend.length > 0
       addStar legend.remove('.required-indicator')
     else
