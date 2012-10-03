@@ -73,17 +73,18 @@ cleanUpRadioButtonErrors = ->
     $('input[type="radio"], input[type="checkbox"]').closest('.radio-fields').append(err).wrapInner('<div class="field_with_errors" />')
     $('.radio-fields legend').prependTo('.radio-fields') if $('.radio-fields legend').length > 0
 
+addStar = (element) ->
+  unless element.children(".required-indicator").length
+    element.prepend  $('<abbr title="Required" class="required-indicator">*</abbr>')
+ 
 addRequiredIndicators = ->
-  $('form[data-validate="true"]').find('[data-validate="true"]').not('input[type="checkbox"], input[type="radio"]').each (index, field) ->
-    reqdindicator = $('<abbr />').text('*').attr('title', 'Required ').addClass('required-indicator')
-    $(@).closest('.field-wrap').find('label[for=' + $(@).identify() + ']').prepend(reqdindicator)
+  $('form[data-validate="true"]').find('[data-validate="true"]').each (index, field) ->
+    legend = $(@).parent().find('legend')
+    if legend.length > 0
+      addStar legend.remove('.required-indicator')
+    else
+      addStar $('label[for=' + $(@).identify() + ']')
     $(@).prop('required', true).attr('aria-required', 'true')
-
-  $('form[data-validate="true"]').find('[data-validate="true"][type="checkbox"], [data-validate="true"][type="radio"]').each (index, field) ->
-    reqdindicator = $('<abbr />').text('*').attr('title', 'Required ').addClass('required-indicator')
-    $(@).closest('.field-wrap').find('legend').remove('.required-indicator').prepend(reqdindicator)
-    $(@).prop('required', true).attr('aria-required', 'true')
-
 
 anonymous_element_index = 0
 $.fn.identify = ->
