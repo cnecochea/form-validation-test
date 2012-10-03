@@ -69,9 +69,10 @@ cleanUpRadioButtonErrors = ->
     .hide()
   err = $('<div/>').addClass('inline-error-message').text('EEEK!')
 
-  if $('.radio-fields .field_with_errors').length > 0
-    $('input[type="radio"], input[type="checkbox"]').closest('.radio-fields').append(err).wrapInner('<div class="field_with_errors" />')
-    $('.radio-fields legend').prependTo('.radio-fields') if $('.radio-fields legend').length > 0
+  $('.radio-fields').each (index, field) ->
+    if $(@).find('.field_with_errors').length > 0
+      $(@).append(err).wrapInner('<div class="field_with_errors" />')
+      $(@).find('legend').prependTo($(@)) if $(@).find('legend').length > 0
 
 addStar = (element) ->
   unless element.children(".required-indicator").length
