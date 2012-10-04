@@ -65,6 +65,9 @@ validateHiddenField = (e) ->
     val = e.target.value
   writeValueToHiddenField e.target, val
 
+addAriaInvalidAttribute = ->
+  $('.field_with_errors').children().filter(':input').attr('aria-invalid', true)
+
 cleanUpRadioButtonErrors = ->
   radios = $('.field_with_errors').find('input[type="radio"], input[type="checkbox"]').closest('.field_with_errors')
   radios.addClass('error-validation-patch').find('label.message')
@@ -110,4 +113,6 @@ $ ->
   cleanUpRadioButtonErrors()
 
   addRequiredIndicators()
+
+  addAriaInvalidAttribute()
 
