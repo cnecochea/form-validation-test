@@ -44,7 +44,7 @@ writeValueToHiddenField = (el, val) ->
   target = $("##{targetId}")
   target.val val
   target.data 'changed', true
-  target.trigger 'focusout'
+  target.trigger 'blur'
 
 buildDateString = (dateFieldId) ->
   year = [1,2,3].map (i, n) ->
@@ -71,11 +71,6 @@ addAriaInvalidAttribute = ->
   $('.field_with_errors').children().filter(':input').attr('aria-invalid', true)
 
 cleanUpRadioButtonErrors = ->
-  #radios = $('.field_with_errors').find('input[type="radio"], input[type="checkbox"]').closest('.field_with_errors')
-  #radios.addClass('error-validation-patch').find('label.message')
-    #.attr('aria-hidden', true)
-    ##.hide()
-
   err = (msg) ->
     $('<div/>').addClass('inline-error-message').text(msg)
 
