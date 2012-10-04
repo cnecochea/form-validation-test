@@ -7,7 +7,7 @@
     = f.label :body, class: 'principal-label'
     = f.text_area :body
   %fieldset.field-wrap.composite-field
-    %legend Expires on
+    %legend.principal-label Expires on
     = f.validated_date_select :expires_on, {include_blank: true}, {}
     = f.text_field :expires_on, 'data-validate' => true, style: 'display:none;'
 
@@ -16,7 +16,7 @@
     = f.text_field :required_field
 
   %fieldset.field-wrap.composite-field.radio-fields
-    %legend Preferred station
+    %legend.principal-label Preferred station
     - %w(oldies new_wave grunge).each do |station|
       = f.radio_button :station, station
       = f.label "station_#{station}", station.humanize.titleize

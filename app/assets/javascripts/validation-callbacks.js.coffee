@@ -29,11 +29,12 @@ clientSideValidations.callbacks.element.pass = (element, removeError, eventData)
   removeError()
 
 clientSideValidations.callbacks.element.fail = (element, message, addError, eventData) ->
-  addError()
   id = element.attr('id')
   labelText = $("label:not([class='message'])[for='#{id}']").text()
+  name = element.parent().find('.principal-label').text()
   anchor = if element.attr('type') == 'hidden' then $("[id*=#{id}]").attr('id') else element.attr('id')
   currentErrors[labelText || name] = {message: message, anchor: anchor}
+  addError()
   printErrors element.closest('form')
   
 clientSideValidations.callbacks.form.fail = (form, eventData) ->
