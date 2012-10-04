@@ -19,6 +19,8 @@ printErrors = (form) ->
       role: 'heading'
       'aria-level': 2
 
+  addAriaInvalidAttribute()
+
 clientSideValidations.callbacks.element.pass = (element, removeError, eventData) ->
   id = element.attr('id')
   labelText = $("label:not([class='message'])[for='#{id}']").text()

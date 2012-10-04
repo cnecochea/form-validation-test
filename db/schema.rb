@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(:version => 20121003184537) do
     t.date     "expires_on"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
-    t.datetime "test_date"
     t.string   "required_field", :default => "",   :null => false
     t.string   "station",        :default => "",   :null => false
     t.boolean  "feasibility",    :default => true, :null => false
