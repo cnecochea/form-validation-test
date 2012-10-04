@@ -54,6 +54,9 @@ buildDateString = (dateFieldId) ->
     hiddenDate = year.join('-')
   hiddenDate
 
+atLeastOne = (elId) ->
+  $("input[type=checkbox][id^=#{elId}]:checked").length
+
 validateHiddenField = (e) ->
   target = $(e.target)
   if target.data('pre-validation-callback')
@@ -99,6 +102,9 @@ $ ->
     validateHiddenField(e)
 
   $(document).on 'change', 'form[data-validate=true] select[data-validated-by]', (e) ->
+    validateHiddenField(e)
+
+  $(document).on 'click', 'form[data-validate=true] input[type=checkbox][data-validated-by]', (e) ->
     validateHiddenField(e)
 
   cleanUpRadioButtonErrors()

@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121001190410) do
+ActiveRecord::Schema.define(:version => 20121003184537) do
+
+  create_table "vacation_spots", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "widget_vacation_spots", :force => true do |t|
+    t.integer "widget_id"
+    t.integer "vacation_spot_id"
+  end
 
   create_table "widgets", :force => true do |t|
     t.string   "name"
@@ -20,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20121001190410) do
     t.date     "expires_on"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
+    t.datetime "test_date"
     t.string   "required_field", :default => "",   :null => false
     t.string   "station",        :default => "",   :null => false
     t.boolean  "feasibility",    :default => true, :null => false
