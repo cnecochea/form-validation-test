@@ -71,15 +71,21 @@ addAriaInvalidAttribute = ->
   $('.field_with_errors').children().filter(':input').attr('aria-invalid', true)
 
 cleanUpRadioButtonErrors = ->
-  radios = $('.field_with_errors').find('input[type="radio"], input[type="checkbox"]').closest('.field_with_errors')
-  radios.addClass('error-validation-patch').find('label.message')
-    .attr('aria-hidden', true)
-    .hide()
-  err = $('<div/>').addClass('inline-error-message').text('EEEK!')
+  #radios = $('.field_with_errors').find('input[type="radio"], input[type="checkbox"]').closest('.field_with_errors')
+  #radios.addClass('error-validation-patch').find('label.message')
+    #.attr('aria-hidden', true)
+    ##.hide()
+
+  err = (msg) ->
+    $('<div/>').addClass('inline-error-message').text(msg)
 
   $('.radio-fields').each (index, field) ->
-    if $(@).find('.field_with_errors').length > 0
-      $(@).append(err).wrapInner('<div class="field_with_errors" />')
+    if $(@).find('.field_with_errors').length > 1
+      $(@).find('.field_with_errors').addClass('error-validation-patch')
+        .find('.inline-error-message')
+          .attr('aria-hidden', true)
+          .hide()
+      $(@).append(err($(@).find('.inline-error-message').eq(0).text())).wrapInner('<div class="field_with_errors" />')
       $(@).find('legend').prependTo($(@)) if $(@).find('legend').length > 0
 
 addStar = (element) ->

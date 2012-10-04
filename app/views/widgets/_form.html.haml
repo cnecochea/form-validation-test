@@ -25,7 +25,7 @@
     = f.check_box :feasibility
     = f.label :feasibility
 
-  .field-wrap.composite-field.radio-fields
+  %fieldset.field-wrap.composite-field.radio-fields
     - VacationSpot.all.each do |vs|
       = check_box_tag '[vacation_spot_id][]', vs.id, (@widget || Widget.new).vacation_spots.include?(vs), id: "vacation_spot_#{vs.id}", 'data-validated-by' => 'vacation_spot', 'data-pre-validation-callback' => 'atLeastOne("vacation_spot")'
       = f.label vs.name, for: "vacation_spot_#{vs.id}"
