@@ -1,6 +1,8 @@
 .example-form= render :partial => 'form'
 
-<pre style="text-align: left; position: fixed; bottom: 0;">
+<div style="text-align: left; position: fixed; bottom: 0;">
+<p><a href="#" role="button" onclick="$('pre').toggle(); return false">See todos (6)</a></p>
+<pre style="display: none">
 LOL-TODO:
 add animation to error flags
 fix single checkbox error display
@@ -13,4 +15,5 @@ refactor error message to not be a LABEL element
 %s add aria-invalid attr
 %s fix multiple LEGEND elements
 </pre>
+</div>
   

@@ -3,6 +3,11 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "modules/base";
 
+* {
+  @include box-sizing(border-box);
+}
+
+
 body {
   margin: 1em;
   text-align: center;
@@ -105,6 +110,10 @@ div.field_with_errors {
   text-align: left;
   position: relative;
   z-index: 1;
+
+  header {
+    margin: 0 1em;
+  }
 }
 
 %input_box {
@@ -159,8 +168,20 @@ div.field_with_errors {
 }
 
 .radio-fields {
+  @include pie-clearfix;
+
   label {
+    float: left;
+    clear: right;
     margin-right: 1em;
+    margin-left: .5em;
+  }
+
+  input {
+    &[type="radio"], &[type="checkbox"] {
+      float: left;
+      clear: left;
+    }
   }
 
   .error-validation-patch {

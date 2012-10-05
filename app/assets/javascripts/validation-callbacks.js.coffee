@@ -5,7 +5,7 @@ printErrors = (form) ->
   err.html('')
   idref = err.identify()
   for field, data of currentErrors
-    err.append("<li>#{field} #{data.message} <a href=\"##{data.anchor}\" onclick=\"$('\##{data.anchor}').focus(); return false\">Fix me!</a></li>").attr
+    err.append("<li>#{field} #{data.message}: <a href=\"##{data.anchor}\" onclick=\"$('\##{data.anchor}').focus(); return false\">Fix it.</a></li>").attr
       tabindex: '0'
       role: 'alert'
       'aria-describedby': "title_#{idref}"
@@ -89,7 +89,9 @@ addStar = (element) ->
     element.prepend  $('<abbr title="Required" class="required-indicator">*</abbr>')
  
 addRequiredIndicators = ->
-  $('form[data-validate="true"]').find('[data-validate="true"]').each (index, field) ->
+  formcontainer = $('form[data-validate="true"]')
+  formcontainer.prepend("<header><p><small>Required fields are marked with an asterisk <abbr class='required-indicator'>*</abbr></small></p></header>")
+  formcontainer.find('[data-validate="true"]').each (index, field) ->
     legend = $(@).closest('fieldset').find('legend')
     if legend.length > 0
       addStar legend.remove('.required-indicator')
