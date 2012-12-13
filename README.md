@@ -5,7 +5,7 @@ ARIA-enchanced Client-side validation experiment
 
 TO-DO:
 
-* properly attribute this as a fork of bcardarella / client_side_validations and merge with latest
+* properly attribute this as a fork of <a href="https://github.com/bcardarella/client_side_validations">bcardarella / client_side_validations</a> and merge with latest
 * fix single checkbox error display
 * test multiple checkbox scenario
 * test format validation (email, numerical, pattern, length)
