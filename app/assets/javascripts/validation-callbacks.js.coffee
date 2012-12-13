@@ -1,7 +1,7 @@
 currentErrors = {}
 
 printErrors = (form) ->
-  err = if $('ol.errors').length then $('ol.errors') else $('<ol class="errors validation-rollup"></ol>')
+  err = if $('ol.errors').length then $('ol.errors') else $('<ol class="errors validation-rollup" tabindex="0"></ol>')
   err.html('')
   idref = err.identify()
   for field, data of currentErrors
@@ -11,7 +11,7 @@ printErrors = (form) ->
       'aria-describedby': "title_#{idref}"
   form.append(err)
   $('.validation-rollup-title').remove()
-  $('<p>Sorry, but we need a little more information to proceed.</p>')
+  $('<p>Sorry, but we need a little more information to proceed. <a href="#" class="error-pointer">Please see the list of errors below</a>.</p>')
     .addClass('validation-rollup-title')
     .insertBefore(err)
     .attr
@@ -115,6 +115,10 @@ $ ->
 
   $(document).on 'click', 'form[data-validate=true] input[type=checkbox][data-validated-by]', (e) ->
     validateHiddenField(e)
+
+  $(document).on 'click', '.error-pointer', (e) ->
+    e.preventDefault()
+    $('.validation-rollup').focus()
 
   cleanUpRadioButtonErrors()
 
