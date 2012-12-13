@@ -57,15 +57,6 @@ div.field_with_errors {
     display: block;
     padding: 5px 5px 5px image-width('error.png') + 5;
   }
-  
-  .OLD-inline-error-message {
-    @include squish-text;
-    @include replace-text-with-dimensions("error.png", $inline: true);
-    margin-top: -8px;
-    position: absolute;
-    top: 50%;
-    left: $field_padding;
-  }
 }
 
 %error_presentation {
@@ -161,12 +152,6 @@ div.field_with_errors {
 .composite-field {
   border: 0;
   padding-top: 0;
-
-  .OLD-field_with_errors {
-    @extend %error_wrapper;
-    @extend %input_style;
-    padding-left: 26px;
-  }
 }
 
 .radio-fields {
