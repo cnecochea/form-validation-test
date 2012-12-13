@@ -1,0 +1,12 @@
+TO-DO:
+
+* properly attribute this as a fork of bcardarella / client_side_validations and merge with latest
+* fix single checkbox error display
+* test multiple checkbox scenario
+* test format validation (email, numerical, pattern, length)
+* fix error validation onblur
+* test with simple_form and formtastic
+* refactor error message to not be a LABEL element
+* clear error-rollup onblur of corrected invalid field
+* add animation to error flags
+
